@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    image: backing-app
+    build:
+      context: .
+      args:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/banking_app # Adjust the port to match the MySQL service
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: 1234
+    container_name: banking_app
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    environment: # Pass the environment variables to the container
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/banking_app
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: banking_app
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql_data:

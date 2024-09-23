@@ -20,7 +20,7 @@ public class AccountController {
     }
 
     // ADD Account API REST
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto){
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
@@ -57,7 +57,7 @@ public class AccountController {
     }
 
     // Delete Account  Rest API
-@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable Long id){
         accountService.deleteAccount(id);
         return  ResponseEntity.ok("Account is deleted successfully!");
